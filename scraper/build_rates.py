@@ -4,14 +4,13 @@
 Rate order for each city:
   1. Manual Google Sheet row dated today (IST)
   2. Scraped feed (sources in sources.json)
-  3. Gold API estimate
+No price API is used. If neither gives a rate, the old files are kept.
 
 Uses only the Python standard library.
 
 Exit codes:
-  0  published from the scraped feed or manual entries
-  3  published, but the scraped feed failed (estimate used) -> workflow emails admin
-  1  nothing published (old files kept)
+  0  published
+  1  nothing published (old files kept) -> workflow fails and GitHub emails the admin
 """
 
 import csv
@@ -27,7 +26,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_PATH = os.path.join(ROOT, "scraper", "sources.json")
 OUT_DIR = os.path.join(ROOT, "docs")
 IST = timezone(timedelta(hours=5, minutes=30))
-GRAMS_PER_TROY_OUNCE = 31.1035
 HISTORY_DAYS = 30
 
 GOLD_FIELDS = ("gold_24k_1g", "gold_22k_1g", "gold_18k_1g")
@@ -35,7 +33,6 @@ BUY_FIELDS = ("buy_24k_1g", "buy_22k_1g", "buy_18k_1g")
 SOURCE_LABELS = {
     "manual": ("Market rate", "ବଜାର ଦର"),
     "scraped": ("Market rate", "ବଜାର ଦର"),
-    "auto_estimate": ("Estimated from market price", "ବଜାର ଦରରୁ ଆନୁମାନିକ"),
 }
 NETWORK_ERRORS = (urllib.error.URLError, TimeoutError, OSError, json.JSONDecodeError, UnicodeDecodeError)
 
@@ -87,8 +84,18 @@ def parse_rate_list(payload, items, now, max_age_hours):
     }
     result = {}
     newest = None
-    for key, name in items.items():  # key like "gold_24k"
+    for key, name in items.items():  # key like "gold_24k" or "silver"
         row = by_name.get(name.strip().lower())
+        if key == "silver":
+            # Optional: per-gram silver price, published per kg.
+            if row is not None:
+                try:
+                    silver = parse_number(row.get("sell_rate"))
+                except SourceError:
+                    silver = 0
+                if silver > 0:
+                    result["silver_1kg"] = round(silver * 1000)
+            continue
         if row is None:
             raise SourceError(f"item not found: {key}")
         sell = parse_number(row.get("sell_rate"))
@@ -139,40 +146,6 @@ def validate_gold(rates, previous, max_move_pct):
                 move = abs(rates[field] - old) / old * 100
                 if move > max_move_pct:
                     raise SourceError(f"{field} moved {move:.1f}% from previous day")
-
-
-def estimate_per_gram(symbol, estimate_cfg, user_agent, timeout):
-    """International price in INR per gram, plus import duty and local premium."""
-    api_key = resolve(estimate_cfg.get("api_key", ""))
-    if not api_key:
-        raise SourceError("GOLD_API_KEY not set")
-    body = http_get(
-        f"https://www.goldapi.io/api/{symbol}/INR",
-        user_agent,
-        timeout,
-        {"x-access-token": api_key},
-    )
-    data = json.loads(body)
-    price_per_ounce = parse_number(data.get("price"))
-    if price_per_ounce <= 0:
-        raise SourceError(f"non-positive {symbol} price")
-    duty_key = "duty_pct_gold" if symbol == "XAU" else "duty_pct_silver"
-    duty = float(estimate_cfg.get(duty_key, 0)) / 100
-    premium = float(estimate_cfg.get("premium_pct", 0)) / 100
-    return price_per_ounce / GRAMS_PER_TROY_OUNCE * (1 + duty) * (1 + premium)
-
-
-def estimate_gold(estimate_cfg, user_agent, timeout):
-    gold_24k = estimate_per_gram("XAU", estimate_cfg, user_agent, timeout)
-    return {
-        "gold_24k_1g": round(gold_24k),
-        "gold_22k_1g": round(gold_24k * 0.916),
-        "gold_18k_1g": round(gold_24k * 0.750),
-    }
-
-
-def estimate_silver_kg(estimate_cfg, user_agent, timeout):
-    return round(estimate_per_gram("XAG", estimate_cfg, user_agent, timeout) * 1000)
 
 
 def load_manual_rows(csv_text, today):
@@ -240,7 +213,6 @@ def build(now=None):
     timeout = int(config.get("timeout_seconds", 20))
     max_age = float(config.get("max_feed_age_hours", 36))
     max_move = float(config.get("max_daily_move_pct", 8))
-    estimate_cfg = config.get("estimate", {})
     cities = config["cities"]
 
     now = now or datetime.now(IST)
@@ -270,24 +242,7 @@ def build(now=None):
         except (SourceError, KeyError, *NETWORK_ERRORS) as exc:
             log(f"[{source_id}] failed: {exc}")
 
-    # 2. Silver (always from the estimate) and gold estimate if scraping failed.
-    silver_estimate = None
-    try:
-        silver_estimate = estimate_silver_kg(estimate_cfg, user_agent, timeout)
-        log("[estimate] silver ok")
-    except (SourceError, *NETWORK_ERRORS) as exc:
-        log(f"[estimate] silver failed: {exc}")
-
-    if base is None:
-        try:
-            rates = estimate_gold(estimate_cfg, user_agent, timeout)
-            validate_gold(rates, reference_previous, max_move)
-            base, base_type = rates, "auto_estimate"
-            log("[estimate] gold ok")
-        except (SourceError, *NETWORK_ERRORS) as exc:
-            log(f"[estimate] gold failed: {exc}")
-
-    # 3. Manual overrides.
+    # 2. Manual overrides.
     manual = {}
     sheet_url = resolve(config.get("sheet_csv_url", ""))
     if sheet_url:
@@ -311,7 +266,11 @@ def build(now=None):
         else:
             values, source_type = base, base_type
 
-        silver = values.get("silver_1kg") or silver_estimate or previous.get("silver_1kg")
+        silver = (
+            values.get("silver_1kg")
+            or (base or {}).get("silver_1kg")
+            or previous.get("silver_1kg")
+        )
         label_en, label_or = SOURCE_LABELS[source_type]
         record = {
             "name_en": city["name_en"],
@@ -350,7 +309,7 @@ def build(now=None):
         write_json(config_path, default_app_config())
 
     log(f"Published {len(cities_out)} cities, source={base_type or 'manual'}")
-    return 0 if base_type in ("scraped", None) else 3
+    return 0
 
 
 if __name__ == "__main__":

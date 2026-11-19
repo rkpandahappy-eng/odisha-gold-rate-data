@@ -32,7 +32,6 @@ jobs:
         id: build
         env:
           SRC1_URL: ${{ secrets.SRC1_URL }}
-          GOLD_API_KEY: ${{ secrets.GOLD_API_KEY }}
           SHEET_CSV_URL: ${{ secrets.SHEET_CSV_URL }}
         run: |
           set +e
@@ -51,8 +50,8 @@ jobs:
             git push
           fi
 
-      - name: Fail if the main source did not work
+      - name: Fail if nothing was published
         if: steps.build.outputs.code != '0'
         run: |
-          echo "build_rates.py exited with ${{ steps.build.outputs.code }} (3 = estimate used, 1 = nothing published). Check the log above."
+          echo "build_rates.py exited with ${{ steps.build.outputs.code }}: the scraper failed and there was no manual entry for every city. Old rates were kept. Check the log above."
           exit 1

@@ -12,17 +12,11 @@
       "items": {
         "gold_24k": "Gold 24K",
         "gold_22k": "Gold 22K",
-        "gold_18k": "Gold 18K"
+        "gold_18k": "Gold 18K",
+        "silver": "Silver 925"
       }
     }
   ],
-  "estimate": {
-    "provider": "goldapi",
-    "api_key": "env:GOLD_API_KEY",
-    "duty_pct_gold": 6.0,
-    "duty_pct_silver": 6.0,
-    "premium_pct": 0.0
-  },
   "cities": [
     { "id": "cuttack", "name_en": "Cuttack", "name_or": "କଟକ" },
     { "id": "bhubaneswar", "name_en": "Bhubaneswar", "name_or": "ଭୁବନେଶ୍ୱର" },

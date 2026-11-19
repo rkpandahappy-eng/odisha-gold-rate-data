@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import build_rates as br  # noqa: E402
 
 FIXTURE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "rate_list.json")
-ITEMS = {"gold_24k": "Gold 24K", "gold_22k": "Gold 22K", "gold_18k": "Gold 18K"}
+ITEMS = {"gold_24k": "Gold 24K", "gold_22k": "Gold 22K", "gold_18k": "Gold 18K", "silver": "Silver 925"}
 NOW = datetime(2026, 11, 18, 18, 0, tzinfo=br.IST)
 
 
@@ -25,6 +25,16 @@ class ParseRateListTests(unittest.TestCase):
         self.assertEqual(rates["gold_22k_1g"], 12215)
         self.assertEqual(rates["gold_18k_1g"], 9994)
         self.assertEqual(rates["buy_22k_1g"], 11848)
+        self.assertEqual(rates["silver_1kg"], 172000)
+
+    def test_missing_silver_is_optional(self):
+        payload = load_fixture()
+        payload["response"]["view_rate_list"] = [
+            row for row in payload["response"]["view_rate_list"] if row["metal_type"] != "Silver"
+        ]
+        rates = br.parse_rate_list(payload, ITEMS, NOW, 36)
+        self.assertNotIn("silver_1kg", rates)
+        self.assertEqual(rates["gold_24k_1g"], 13325)
 
     def test_missing_item_raises(self):
         payload = load_fixture()
