@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-19T14:31:33+05:30",
+  "cities": {
+    "cuttack": {
+      "name_en": "Cuttack",
+      "name_or": "କଟକ",
+      "source": {
+        "type": "scraped",
+        "label_en": "Market rate",
+        "label_or": "ବଜାର ଦର"
+      },
+      "gold_24k_1g": 13069,
+      "gold_22k_1g": 11980,
+      "gold_18k_1g": 9802,
+      "buy_24k_1g": 12677,
+      "buy_22k_1g": 11620,
+      "buy_18k_1g": 9148,
+      "silver_1kg": null,
+      "change": {
+        "gold_24k_1g": null,
+        "gold_22k_1g": null,
+        "gold_18k_1g": null,
+        "silver_1kg": null
+      }
+    },
+    "bhubaneswar": {
+      "name_en": "Bhubaneswar",
+      "name_or": "ଭୁବନେଶ୍ୱର",
+      "source": {
+        "type": "scraped",
+        "label_en": "Market rate",
+        "label_or": "ବଜାର ଦର"
+      },
+      "gold_24k_1g": 13069,
+      "gold_22k_1g": 11980,
+      "gold_18k_1g": 9802,
+      "buy_24k_1g": 12677,
+      "buy_22k_1g": 11620,
+      "buy_18k_1g": 9148,
+      "silver_1kg": null,
+      "change": {
+        "gold_24k_1g": null,
+        "gold_22k_1g": null,
+        "gold_18k_1g": null,
+        "silver_1kg": null
+      }
+    },
+    "berhampur": {
+      "name_en": "Berhampur",
+      "name_or": "ବ୍ରହ୍ମପୁର",
+      "source": {
+        "type": "scraped",
+        "label_en": "Market rate",
+        "label_or": "ବଜାର ଦର"
+      },
+      "gold_24k_1g": 13069,
+      "gold_22k_1g": 11980,
+      "gold_18k_1g": 9802,
+      "buy_24k_1g": 12677,
+      "buy_22k_1g": 11620,
+      "buy_18k_1g": 9148,
+      "silver_1kg": null,
+      "change": {
+        "gold_24k_1g": null,
+        "gold_22k_1g": null,
+        "gold_18k_1g": null,
+        "silver_1kg": null
+      }
+    },
+    "sambalpur": {
+      "name_en": "Sambalpur",
+      "name_or": "ସମ୍ବଲପୁର",
+      "source": {
+        "type": "scraped",
+        "label_en": "Market rate",
+        "label_or": "ବଜାର ଦର"
+      },
+      "gold_24k_1g": 13069,
+      "gold_22k_1g": 11980,
+      "gold_18k_1g": 9802,
+      "buy_24k_1g": 12677,
+      "buy_22k_1g": 11620,
+      "buy_18k_1g": 9148,
+      "silver_1kg": null,
+      "change": {
+        "gold_24k_1g": null,
+        "gold_22k_1g": null,
+        "gold_18k_1g": null,
+        "silver_1kg": null
+      }
+    },
+    "balasore": {
+      "name_en": "Balasore",
+      "name_or": "ବାଲେଶ୍ୱର",
+      "source": {
+        "type": "scraped",
+        "label_en": "Market rate",
+        "label_or": "ବଜାର ଦର"
+      },
+      "gold_24k_1g": 13069,
+      "gold_22k_1g": 11980,
+      "gold_18k_1g": 9802,
+      "buy_24k_1g": 12677,
+      "buy_22k_1g": 11620,
+      "buy_18k_1g": 9148,
+      "silver_1kg": null,
+      "change": {
+        "gold_24k_1g": null,
+        "gold_22k_1g": null,
+        "gold_18k_1g": null,
+        "silver_1kg": null
+      }
+    },
+    "rourkela": {
+      "name_en": "Rourkela",
+      "name_or": "ରାଉରକେଲା",
+      "source": {
+        "type": "scraped",
+        "label_en": "Market rate",
+        "label_or": "ବଜାର ଦର"
+      },
+      "gold_24k_1g": 13069,
+      "gold_22k_1g": 11980,
+      "gold_18k_1g": 9802,
+      "buy_24k_1g": 12677,
+      "buy_22k_1g": 11620,
+      "buy_18k_1g": 9148,
+      "silver_1kg": null,
+      "change": {
+        "gold_24k_1g": null,
+        "gold_22k_1g": null,
+        "gold_18k_1g": null,
+        "silver_1kg": null
+      }
+    },
+    "puri": {
+      "name_en": "Puri",
+      "name_or": "ପୁରୀ",
+      "source": {
+        "type": "scraped",
+        "label_en": "Market rate",
+        "label_or": "ବଜାର ଦର"
+      },
+      "gold_24k_1g": 13069,
+      "gold_22k_1g": 11980,
+      "gold_18k_1g": 9802,
+      "buy_24k_1g": 12677,
+      "buy_22k_1g": 11620,
+      "buy_18k_1g": 9148,
+      "silver_1kg": null,
+      "change": {
+        "gold_24k_1g": null,
+        "gold_22k_1g": null,
+        "gold_18k_1g": null,
+        "silver_1kg": null
+      }
+    },
+    "angul": {
+      "name_en": "Angul",
+      "name_or": "ଅନୁଗୁଳ",
+      "source": {
+        "type": "scraped",
+        "label_en": "Market rate",
+        "label_or": "ବଜାର ଦର"
+      },
+      "gold_24k_1g": 13069,
+      "gold_22k_1g": 11980,
+      "gold_18k_1g": 9802,
+      "buy_24k_1g": 12677,
+      "buy_22k_1g": 11620,
+      "buy_18k_1g": 9148,
+      "silver_1kg": null,
+      "change": {
+        "gold_24k_1g": null,
+        "gold_22k_1g": null,
+        "gold_18k_1g": null,
+        "silver_1kg": null
+      }
+    }
+  }
+}

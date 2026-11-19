@@ -1,0 +1,58 @@
+name: Update rates
+
+on:
+  schedule:
+    # Times are UTC. 05:45 UTC = 11:15 AM IST (after the source's ~10:30 AM update),
+    # 12:00 UTC = 5:30 PM IST.
+    - cron: "45 5 * * *"
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-rates
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run tests
+        run: python -m unittest discover -s scraper/tests -v
+
+      - name: Build rates
+        id: build
+        env:
+          SRC1_URL: ${{ secrets.SRC1_URL }}
+          GOLD_API_KEY: ${{ secrets.GOLD_API_KEY }}
+          SHEET_CSV_URL: ${{ secrets.SHEET_CSV_URL }}
+        run: |
+          set +e
+          python scraper/build_rates.py
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Update rates $(TZ=Asia/Kolkata date '+%Y-%m-%d %H:%M IST')"
+            git push
+          fi
+
+      - name: Fail if the main source did not work
+        if: steps.build.outputs.code != '0'
+        run: |
+          echo "build_rates.py exited with ${{ steps.build.outputs.code }} (3 = estimate used, 1 = nothing published). Check the log above."
+          exit 1

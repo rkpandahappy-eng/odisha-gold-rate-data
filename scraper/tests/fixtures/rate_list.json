@@ -1,0 +1,11 @@
+{
+  "response": {
+    "view_rate_list": [
+      { "id": "69409", "metal_type": "Gold", "purity": "14K", "final_metal_type": "Gold 14K", "sell_rate": "8,528.00", "sell_rate_different": "-179.00", "exchange_rate": "8,528.00", "buy_rate": "7,729.00", "buy_rate_different": "-161.00", "added_date": "18-Nov-2026", "added_date_time": "18-Nov-2026 10:40 AM" },
+      { "id": "69412", "metal_type": "Gold", "purity": "18K", "final_metal_type": "Gold 18K", "sell_rate": "9,994.00", "sell_rate_different": "-209.00", "exchange_rate": "9,994.00", "buy_rate": "9,328.00", "buy_rate_different": "-195.00", "added_date": "18-Nov-2026", "added_date_time": "18-Nov-2026 10:40 AM" },
+      { "id": "69415", "metal_type": "Gold", "purity": "22K", "final_metal_type": "Gold 22K", "sell_rate": "12,215.00", "sell_rate_different": "-255.00", "exchange_rate": "12,215.00", "buy_rate": "11,848.00", "buy_rate_different": "-248.00", "added_date": "18-Nov-2026", "added_date_time": "18-Nov-2026 10:40 AM" },
+      { "id": "69418", "metal_type": "Gold", "purity": "24K", "final_metal_type": "Gold 24K", "sell_rate": "13,325.00", "sell_rate_different": "-279.00", "exchange_rate": "13,325.00", "buy_rate": "12,925.00", "buy_rate_different": "-271.00", "added_date": "18-Nov-2026", "added_date_time": "18-Nov-2026 10:40 AM" },
+      { "id": "69421", "metal_type": "Silver", "purity": "925", "final_metal_type": "Silver 925", "sell_rate": "172.00", "sell_rate_different": "-4.00", "exchange_rate": "158.20", "buy_rate": "141.00", "buy_rate_different": "-3.30", "added_date": "18-Nov-2026", "added_date_time": "18-Nov-2026 10:40 AM" }
+    ]
+  }
+}

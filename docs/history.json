@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "days": [
+    {
+      "date": "2026-11-19",
+      "cities": {
+        "cuttack": {
+          "gold_24k_1g": 13069,
+          "gold_22k_1g": 11980,
+          "gold_18k_1g": 9802,
+          "silver_1kg": null
+        },
+        "bhubaneswar": {
+          "gold_24k_1g": 13069,
+          "gold_22k_1g": 11980,
+          "gold_18k_1g": 9802,
+          "silver_1kg": null
+        },
+        "berhampur": {
+          "gold_24k_1g": 13069,
+          "gold_22k_1g": 11980,
+          "gold_18k_1g": 9802,
+          "silver_1kg": null
+        },
+        "sambalpur": {
+          "gold_24k_1g": 13069,
+          "gold_22k_1g": 11980,
+          "gold_18k_1g": 9802,
+          "silver_1kg": null
+        },
+        "balasore": {
+          "gold_24k_1g": 13069,
+          "gold_22k_1g": 11980,
+          "gold_18k_1g": 9802,
+          "silver_1kg": null
+        },
+        "rourkela": {
+          "gold_24k_1g": 13069,
+          "gold_22k_1g": 11980,
+          "gold_18k_1g": 9802,
+          "silver_1kg": null
+        },
+        "puri": {
+          "gold_24k_1g": 13069,
+          "gold_22k_1g": 11980,
+          "gold_18k_1g": 9802,
+          "silver_1kg": null
+        },
+        "angul": {
+          "gold_24k_1g": 13069,
+          "gold_22k_1g": 11980,
+          "gold_18k_1g": 9802,
+          "silver_1kg": null
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "user_agent": "OdishaGoldRateBot/1.0",
+  "timeout_seconds": 20,
+  "max_feed_age_hours": 36,
+  "max_daily_move_pct": 8,
+  "sheet_csv_url": "env:SHEET_CSV_URL",
+  "sources": [
+    {
+      "id": "src1",
+      "type": "json_rate_list",
+      "url": "env:SRC1_URL",
+      "items": {
+        "gold_24k": "Gold 24K",
+        "gold_22k": "Gold 22K",
+        "gold_18k": "Gold 18K"
+      }
+    }
+  ],
+  "estimate": {
+    "provider": "goldapi",
+    "api_key": "env:GOLD_API_KEY",
+    "duty_pct_gold": 6.0,
+    "duty_pct_silver": 6.0,
+    "premium_pct": 0.0
+  },
+  "cities": [
+    { "id": "cuttack", "name_en": "Cuttack", "name_or": "କଟକ" },
+    { "id": "bhubaneswar", "name_en": "Bhubaneswar", "name_or": "ଭୁବନେଶ୍ୱର" },
+    { "id": "berhampur", "name_en": "Berhampur", "name_or": "ବ୍ରହ୍ମପୁର" },
+    { "id": "sambalpur", "name_en": "Sambalpur", "name_or": "ସମ୍ବଲପୁର" },
+    { "id": "balasore", "name_en": "Balasore", "name_or": "ବାଲେଶ୍ୱର" },
+    { "id": "rourkela", "name_en": "Rourkela", "name_or": "ରାଉରକେଲା" },
+    { "id": "puri", "name_en": "Puri", "name_or": "ପୁରୀ" },
+    { "id": "angul", "name_en": "Angul", "name_or": "ଅନୁଗୁଳ" }
+  ]
+}
