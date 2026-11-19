@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T15:25:43+05:30",
+  "updated_at": "2026-11-19T15:43:19+05:30",
   "cities": {
     "cuttack": {
       "name_en": "Cuttack",
@@ -16,7 +16,7 @@
       "buy_24k_1g": 12677,
       "buy_22k_1g": 11620,
       "buy_18k_1g": 9148,
-      "silver_1kg": null,
+      "silver_1kg": 168000,
       "change": {
         "gold_24k_1g": null,
         "gold_22k_1g": null,
@@ -38,7 +38,7 @@
       "buy_24k_1g": 12677,
       "buy_22k_1g": 11620,
       "buy_18k_1g": 9148,
-      "silver_1kg": null,
+      "silver_1kg": 168000,
       "change": {
         "gold_24k_1g": null,
         "gold_22k_1g": null,
@@ -60,7 +60,7 @@
       "buy_24k_1g": 12677,
       "buy_22k_1g": 11620,
       "buy_18k_1g": 9148,
-      "silver_1kg": null,
+      "silver_1kg": 168000,
       "change": {
         "gold_24k_1g": null,
         "gold_22k_1g": null,
@@ -82,7 +82,7 @@
       "buy_24k_1g": 12677,
       "buy_22k_1g": 11620,
       "buy_18k_1g": 9148,
-      "silver_1kg": null,
+      "silver_1kg": 168000,
       "change": {
         "gold_24k_1g": null,
         "gold_22k_1g": null,
@@ -104,7 +104,7 @@
       "buy_24k_1g": 12677,
       "buy_22k_1g": 11620,
       "buy_18k_1g": 9148,
-      "silver_1kg": null,
+      "silver_1kg": 168000,
       "change": {
         "gold_24k_1g": null,
         "gold_22k_1g": null,
@@ -126,7 +126,7 @@
       "buy_24k_1g": 12677,
       "buy_22k_1g": 11620,
       "buy_18k_1g": 9148,
-      "silver_1kg": null,
+      "silver_1kg": 168000,
       "change": {
         "gold_24k_1g": null,
         "gold_22k_1g": null,
@@ -148,7 +148,7 @@
       "buy_24k_1g": 12677,
       "buy_22k_1g": 11620,
       "buy_18k_1g": 9148,
-      "silver_1kg": null,
+      "silver_1kg": 168000,
       "change": {
         "gold_24k_1g": null,
         "gold_22k_1g": null,
@@ -170,7 +170,7 @@
       "buy_24k_1g": 12677,
       "buy_22k_1g": 11620,
       "buy_18k_1g": 9148,
-      "silver_1kg": null,
+      "silver_1kg": 168000,
       "change": {
         "gold_24k_1g": null,
         "gold_22k_1g": null,
