@@ -2,7 +2,7 @@
 """Build docs/today.json and docs/history.json for the Odisha Gold Rate app.
 
 Rate order for each city:
-  1. Manual Google Sheet row dated today (IST)
+  1. Manual entry dated today (IST), saved by the admin panel in manual/today.json
   2. Scraped feed (sources in sources.json)
 No price API is used. If neither gives a rate, the old files are kept.
 
@@ -13,8 +13,6 @@ Exit codes:
   1  nothing published (old files kept) -> workflow fails and GitHub emails the admin
 """
 
-import csv
-import io
 import json
 import os
 import sys
@@ -25,6 +23,7 @@ from datetime import datetime, timedelta, timezone
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_PATH = os.path.join(ROOT, "scraper", "sources.json")
 OUT_DIR = os.path.join(ROOT, "docs")
+MANUAL_PATH = os.path.join(ROOT, "manual", "today.json")
 IST = timezone(timedelta(hours=5, minutes=30))
 HISTORY_DAYS = 30
 
@@ -53,7 +52,7 @@ def resolve(value):
 
 
 def http_get(url, user_agent, timeout, extra_headers=None):
-    headers = {"User-Agent": user_agent, "Accept": "application/json, text/csv, */*"}
+    headers = {"User-Agent": user_agent, "Accept": "application/json, */*"}
     headers.update(extra_headers or {})
     request = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(request, timeout=timeout) as response:
@@ -148,28 +147,34 @@ def validate_gold(rates, previous, max_move_pct):
                     raise SourceError(f"{field} moved {move:.1f}% from previous day")
 
 
-def load_manual_rows(csv_text, today):
-    """Return {city_id: {field: value}} for Sheet rows dated today."""
+def load_manual(data, today, city_ids):
+    """Return {city_id: {field: value}} from manual/today.json if it is dated today.
+
+    The file is written by the admin panel:
+      {"schema_version": 1, "date": "YYYY-MM-DD", "cities": {"cuttack": {...}}}
+    Entries with missing gold values or wrong purity ratios are ignored.
+    """
+    if not isinstance(data, dict) or data.get("date") != today:
+        return {}
+    cities = data.get("cities")
+    if not isinstance(cities, dict):
+        return {}
     rows = {}
-    for row in csv.DictReader(io.StringIO(csv_text)):
-        city_id = (row.get("city_id") or "").strip().lower()
-        if not city_id or (row.get("date") or "").strip() != today:
+    for city_id, raw in cities.items():
+        if city_id not in city_ids or not isinstance(raw, dict):
+            log(f"[manual] ignoring unknown city entry")
             continue
         values = {}
         for field in GOLD_FIELDS + ("silver_1kg",):
-            text = (row.get(field) or "").strip()
-            if text:
-                try:
-                    number = parse_number(text)
-                except SourceError:
-                    log(f"[manual] {city_id}: ignoring bad {field} value")
-                    continue
-                if number > 0:
-                    values[field] = round(number)
-        if all(field in values for field in GOLD_FIELDS):
-            rows[city_id] = values
-        else:
-            log(f"[manual] {city_id}: row dated today is missing gold values, ignored")
+            value = raw.get(field)
+            if isinstance(value, (int, float)) and value > 0:
+                values[field] = round(value)
+        try:
+            validate_gold(values, None, 0)
+        except SourceError as exc:
+            log(f"[manual] {city_id}: ignored ({exc})")
+            continue
+        rows[city_id] = values
     return rows
 
 
@@ -242,15 +247,11 @@ def build(now=None):
         except (SourceError, KeyError, *NETWORK_ERRORS) as exc:
             log(f"[{source_id}] failed: {exc}")
 
-    # 2. Manual overrides.
-    manual = {}
-    sheet_url = resolve(config.get("sheet_csv_url", ""))
-    if sheet_url:
-        try:
-            manual = load_manual_rows(http_get(sheet_url, user_agent, timeout), today)
-            log(f"[manual] {len(manual)} city row(s) for today")
-        except NETWORK_ERRORS as exc:
-            log(f"[manual] failed: {exc}")
+    # 2. Manual overrides from the admin panel (manual/today.json).
+    manual = load_manual(
+        load_json(MANUAL_PATH, {}), today, {city["id"] for city in cities}
+    )
+    log(f"[manual] {len(manual)} city entry(s) for today")
 
     if base is None and not all(city["id"] in manual for city in cities):
         log("No usable rates for every city. Keeping the old files.")

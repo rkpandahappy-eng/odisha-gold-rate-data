@@ -74,17 +74,31 @@ class ValidateGoldTests(unittest.TestCase):
             br.validate_gold(dict(self.GOOD, gold_18k_1g=0), None, 8)
 
 
-class ManualSheetTests(unittest.TestCase):
-    def test_reads_only_todays_complete_rows(self):
-        csv_text = (
-            "city_id,date,gold_24k_1g,gold_22k_1g,gold_18k_1g,silver_1kg\n"
-            "cuttack,2026-11-19,\"13,326\",12216,9995,158000\n"
-            "puri,2026-11-18,13300,12190,9975,157000\n"
-            "angul,2026-11-19,13326,,9995,\n"
-        )
-        rows = br.load_manual_rows(csv_text, "2026-11-19")
+class ManualFileTests(unittest.TestCase):
+    CITIES = {"cuttack", "puri", "angul"}
+    GOOD = {"gold_24k_1g": 13326, "gold_22k_1g": 12216, "gold_18k_1g": 9995, "silver_1kg": 158000}
+
+    def test_reads_todays_valid_entries(self):
+        data = {
+            "schema_version": 1,
+            "date": "2026-11-19",
+            "cities": {
+                "cuttack": self.GOOD,
+                "angul": {"gold_24k_1g": 13326, "gold_18k_1g": 9995},
+                "puri": dict(self.GOOD, gold_22k_1g=13300),
+                "nowhere": self.GOOD,
+            },
+        }
+        rows = br.load_manual(data, "2026-11-19", self.CITIES)
         self.assertEqual(list(rows), ["cuttack"])
-        self.assertEqual(rows["cuttack"]["gold_24k_1g"], 13326)
+        self.assertEqual(rows["cuttack"]["silver_1kg"], 158000)
+
+    def test_old_date_is_ignored(self):
+        data = {"schema_version": 1, "date": "2026-11-18", "cities": {"cuttack": self.GOOD}}
+        self.assertEqual(br.load_manual(data, "2026-11-19", self.CITIES), {})
+
+    def test_empty_file_is_ignored(self):
+        self.assertEqual(br.load_manual({}, "2026-11-19", self.CITIES), {})
 
 
 class ParseNumberTests(unittest.TestCase):

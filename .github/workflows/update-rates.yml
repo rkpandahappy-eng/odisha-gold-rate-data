@@ -6,6 +6,10 @@ on:
     # 12:00 UTC = 5:30 PM IST.
     - cron: "45 5 * * *"
     - cron: "0 12 * * *"
+  # The admin panel saves manual rates here; publish them right away.
+  push:
+    branches: [main]
+    paths: ["manual/**"]
   workflow_dispatch:
 
 permissions:
@@ -26,13 +30,14 @@ jobs:
           python-version: "3.12"
 
       - name: Run tests
-        run: python -m unittest discover -s scraper/tests -v
+        run: |
+          python -m unittest discover -s scraper/tests -v
+          node --test tests/admin_api.test.mjs
 
       - name: Build rates
         id: build
         env:
           SRC1_URL: ${{ secrets.SRC1_URL }}
-          SHEET_CSV_URL: ${{ secrets.SHEET_CSV_URL }}
         run: |
           set +e
           python scraper/build_rates.py
@@ -47,7 +52,11 @@ jobs:
             echo "No changes"
           else
             git commit -m "Update rates $(TZ=Asia/Kolkata date '+%Y-%m-%d %H:%M IST')"
-            git push
+            # The admin panel may have saved something meanwhile (other files).
+            for attempt in 1 2 3; do
+              git pull --rebase --quiet && git push && break
+              sleep 5
+            done
           fi
 
       - name: Fail if nothing was published

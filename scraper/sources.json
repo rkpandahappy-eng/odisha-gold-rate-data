@@ -3,7 +3,6 @@
   "timeout_seconds": 20,
   "max_feed_age_hours": 36,
   "max_daily_move_pct": 8,
-  "sheet_csv_url": "env:SHEET_CSV_URL",
   "sources": [
     {
       "id": "src1",
