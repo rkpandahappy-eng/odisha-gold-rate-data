@@ -318,6 +318,59 @@
           "silver_1kg": 162000
         }
       }
+    },
+    {
+      "date": "2026-11-25",
+      "cities": {
+        "cuttack": {
+          "gold_24k_1g": 12780,
+          "gold_22k_1g": 11715,
+          "gold_18k_1g": 9585,
+          "silver_1kg": 162000
+        },
+        "bhubaneswar": {
+          "gold_24k_1g": 12780,
+          "gold_22k_1g": 11715,
+          "gold_18k_1g": 9585,
+          "silver_1kg": 162000
+        },
+        "berhampur": {
+          "gold_24k_1g": 12780,
+          "gold_22k_1g": 11715,
+          "gold_18k_1g": 9585,
+          "silver_1kg": 162000
+        },
+        "sambalpur": {
+          "gold_24k_1g": 12780,
+          "gold_22k_1g": 11715,
+          "gold_18k_1g": 9585,
+          "silver_1kg": 162000
+        },
+        "balasore": {
+          "gold_24k_1g": 12780,
+          "gold_22k_1g": 11715,
+          "gold_18k_1g": 9585,
+          "silver_1kg": 162000
+        },
+        "rourkela": {
+          "gold_24k_1g": 12780,
+          "gold_22k_1g": 11715,
+          "gold_18k_1g": 9585,
+          "silver_1kg": 162000
+        },
+        "puri": {
+          "gold_24k_1g": 12780,
+          "gold_22k_1g": 11715,
+          "gold_18k_1g": 9585,
+          "silver_1kg": 162000
+        },
+        "angul": {
+          "gold_24k_1g": 12780,
+          "gold_22k_1g": 11715,
+          "gold_18k_1g": 9585,
+          "silver_1kg": 162000
+        }
+      }
     }
   ]
 }
