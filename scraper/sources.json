@@ -14,6 +14,16 @@
         "gold_18k": "Gold 18K",
         "silver": "Silver 925"
       }
+    },
+    {
+      "id": "src2",
+      "type": "html_cards",
+      "url": "env:SRC2_URL",
+      "items": {
+        "gold_24k": "24K Fine Gold",
+        "gold_22k": "22K Ornament Gold",
+        "gold_18k": "18K Diamond Gold"
+      }
     }
   ],
   "cities": [

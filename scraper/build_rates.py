@@ -3,7 +3,8 @@
 
 Rate order for each city:
   1. Manual entry dated today (IST), saved by the admin panel in manual/today.json
-  2. Scraped feed (sources in sources.json)
+  2. Scraped sources (sources.json), tried in order: the main JSON feed,
+     then a backup web page whose rate cards are read from its HTML
 No price API is used. If neither gives a rate, the old files are kept.
 
 Uses only the Python standard library.
@@ -13,8 +14,10 @@ Exit codes:
   1  nothing published (old files kept) -> workflow fails and GitHub emails the admin
 """
 
+import html
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -121,6 +124,68 @@ def parse_rate_list(payload, items, now, max_age_hours):
         raise SourceError("feed has no timestamp")
     if now - newest > timedelta(hours=max_age_hours):
         raise SourceError(f"feed is stale (last update {newest.isoformat()})")
+    return result
+
+
+AGO_UNITS = {
+    "second": 1 / 3600, "minute": 1 / 60, "hour": 1, "day": 24,
+    "week": 24 * 7, "month": 24 * 30, "year": 24 * 365,
+}
+
+
+def parse_age_hours(text):
+    """Turn "Updated 1 hour ago" / "Updated 58 minutes ago" / "just now" into hours."""
+    text = text.lower()
+    if "just now" in text:
+        return 0.0
+    match = re.search(r"(\d+|an?|one)\s+(second|minute|hour|day|week|month|year)s?\s+ago", text)
+    if not match:
+        raise SourceError(f"bad update time: {text!r}")
+    count = 1 if match.group(1) in ("a", "an", "one") else int(match.group(1))
+    return count * AGO_UNITS[match.group(2)]
+
+
+def html_text_pieces(page):
+    """Visible text of a page, one piece per tag-separated chunk."""
+    page = re.sub(r"(?is)<(script|style)\b.*?</\1>", " ", page)
+    pieces = []
+    for chunk in re.split(r"<[^>]+>", page):
+        chunk = re.sub(r"\s+", " ", html.unescape(chunk)).strip()
+        if chunk:
+            pieces.append(chunk)
+    return pieces
+
+
+def parse_html_cards(page, items, max_age_hours):
+    """Read rate cards laid out as: label, "Updated N hours ago", "₹12,327.00", "/g".
+
+    items maps our key (gold_24k, ...) to the card label on the page. Silver is
+    skipped unless listed, because the backup's silver purity differs from 925.
+    """
+    pieces = html_text_pieces(page)
+    lowered = [piece.lower() for piece in pieces]
+    result = {}
+    for key, label in items.items():
+        try:
+            start = lowered.index(label.strip().lower())
+        except ValueError as exc:
+            raise SourceError(f"card not found: {key}") from exc
+        window = pieces[start + 1:start + 6]
+        updated = next((p for p in window if p.lower().startswith("updated")), None)
+        price = next((p for p in window if p.startswith("₹")), None)
+        if price is None:
+            raise SourceError(f"no price on card: {key}")
+        if updated is None:
+            raise SourceError(f"no update time on card: {key}")
+        if parse_age_hours(updated) > max_age_hours:
+            raise SourceError(f"card is stale: {key} ({updated})")
+        value = parse_number(price)
+        if value <= 0:
+            raise SourceError(f"non-positive price for {key}")
+        if key == "silver":
+            result["silver_1kg"] = round(value * 1000)
+        else:
+            result[f"{key}_1g"] = round(value)
     return result
 
 
@@ -236,10 +301,15 @@ def build(now=None):
             url = resolve(source.get("url", ""))
             if not url:
                 raise SourceError("URL not configured")
-            if source.get("type") != "json_rate_list":
-                raise SourceError(f"unsupported source type {source.get('type')!r}")
-            payload = json.loads(http_get(url, user_agent, timeout))
-            rates = parse_rate_list(payload, source["items"], now, max_age)
+            kind = source.get("type")
+            if kind == "json_rate_list":
+                payload = json.loads(http_get(url, user_agent, timeout))
+                rates = parse_rate_list(payload, source["items"], now, max_age)
+            elif kind == "html_cards":
+                page = http_get(url, user_agent, timeout, {"Accept": "text/html"})
+                rates = parse_html_cards(page, source["items"], max_age)
+            else:
+                raise SourceError(f"unsupported source type {kind!r}")
             validate_gold(rates, reference_previous, max_move)
             base, base_type = rates, "scraped"
             log(f"[{source_id}] ok")

@@ -40,6 +40,7 @@ jobs:
         id: build
         env:
           SRC1_URL: ${{ secrets.SRC1_URL }}
+          SRC2_URL: ${{ secrets.SRC2_URL }}
         run: |
           set +e
           python scraper/build_rates.py

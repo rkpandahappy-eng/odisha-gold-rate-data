@@ -54,6 +54,47 @@ class ParseRateListTests(unittest.TestCase):
             br.parse_rate_list({"data": []}, ITEMS, NOW, 36)
 
 
+CARDS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "rate_cards.html")
+CARD_ITEMS = {"gold_24k": "24K Fine Gold", "gold_22k": "22K Ornament Gold", "gold_18k": "18K Diamond Gold"}
+
+
+def load_cards():
+    with open(CARDS, encoding="utf-8") as handle:
+        return handle.read()
+
+
+class ParseHtmlCardsTests(unittest.TestCase):
+    def test_parses_gold_cards(self):
+        rates = br.parse_html_cards(load_cards(), CARD_ITEMS, 36)
+        self.assertEqual(rates, {"gold_24k_1g": 12327, "gold_22k_1g": 11300, "gold_18k_1g": 9245})
+        br.validate_gold(rates, None, 8)
+
+    def test_ignores_script_text(self):
+        # The script mentions "24K Fine Gold ₹1.00"; the real card must win.
+        self.assertEqual(br.parse_html_cards(load_cards(), CARD_ITEMS, 36)["gold_24k_1g"], 12327)
+
+    def test_missing_card_raises(self):
+        page = load_cards().replace("22K Ornament Gold", "22K Gold")
+        with self.assertRaises(br.SourceError):
+            br.parse_html_cards(page, CARD_ITEMS, 36)
+
+    def test_stale_card_raises(self):
+        with self.assertRaises(br.SourceError):
+            br.parse_html_cards(load_cards(), {"silver": "Silver"}, 36)
+
+    def test_silver_when_listed(self):
+        rates = br.parse_html_cards(load_cards(), {"silver": "Silver"}, 72)
+        self.assertEqual(rates, {"silver_1kg": 158500})
+
+    def test_age_text(self):
+        self.assertEqual(br.parse_age_hours("Updated 58 minutes ago"), 58 / 60)
+        self.assertEqual(br.parse_age_hours("Updated an hour ago"), 1)
+        self.assertEqual(br.parse_age_hours("Updated 3 days ago"), 72)
+        self.assertEqual(br.parse_age_hours("Updated just now"), 0)
+        with self.assertRaises(br.SourceError):
+            br.parse_age_hours("Updated yesterday")
+
+
 class ValidateGoldTests(unittest.TestCase):
     GOOD = {"gold_24k_1g": 13325, "gold_22k_1g": 12215, "gold_18k_1g": 9994}
 
