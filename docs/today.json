@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T03:28:55+05:30",
+  "updated_at": "2026-11-25T16:39:57+05:30",
   "cities": {
     "cuttack": {
       "name_en": "Cuttack",
@@ -10,18 +10,18 @@
         "label_en": "Market rate",
         "label_or": "ବଜାର ଦର"
       },
-      "gold_24k_1g": 12780,
-      "gold_22k_1g": 11715,
-      "gold_18k_1g": 9585,
-      "buy_24k_1g": 12397,
-      "buy_22k_1g": 11363,
-      "buy_18k_1g": 8946,
-      "silver_1kg": 162000,
+      "gold_24k_1g": 12327,
+      "gold_22k_1g": 11300,
+      "gold_18k_1g": 9245,
+      "buy_24k_1g": 11957,
+      "buy_22k_1g": 10961,
+      "buy_18k_1g": 8629,
+      "silver_1kg": 152000,
       "change": {
-        "gold_24k_1g": 0,
-        "gold_22k_1g": 0,
-        "gold_18k_1g": 0,
-        "silver_1kg": 0
+        "gold_24k_1g": -453,
+        "gold_22k_1g": -415,
+        "gold_18k_1g": -340,
+        "silver_1kg": -10000
       }
     },
     "bhubaneswar": {
@@ -32,18 +32,18 @@
         "label_en": "Market rate",
         "label_or": "ବଜାର ଦର"
       },
-      "gold_24k_1g": 12780,
-      "gold_22k_1g": 11715,
-      "gold_18k_1g": 9585,
-      "buy_24k_1g": 12397,
-      "buy_22k_1g": 11363,
-      "buy_18k_1g": 8946,
-      "silver_1kg": 162000,
+      "gold_24k_1g": 12327,
+      "gold_22k_1g": 11300,
+      "gold_18k_1g": 9245,
+      "buy_24k_1g": 11957,
+      "buy_22k_1g": 10961,
+      "buy_18k_1g": 8629,
+      "silver_1kg": 152000,
       "change": {
-        "gold_24k_1g": 0,
-        "gold_22k_1g": 0,
-        "gold_18k_1g": 0,
-        "silver_1kg": 0
+        "gold_24k_1g": -453,
+        "gold_22k_1g": -415,
+        "gold_18k_1g": -340,
+        "silver_1kg": -10000
       }
     },
     "berhampur": {
@@ -54,18 +54,18 @@
         "label_en": "Market rate",
         "label_or": "ବଜାର ଦର"
       },
-      "gold_24k_1g": 12780,
-      "gold_22k_1g": 11715,
-      "gold_18k_1g": 9585,
-      "buy_24k_1g": 12397,
-      "buy_22k_1g": 11363,
-      "buy_18k_1g": 8946,
-      "silver_1kg": 162000,
+      "gold_24k_1g": 12327,
+      "gold_22k_1g": 11300,
+      "gold_18k_1g": 9245,
+      "buy_24k_1g": 11957,
+      "buy_22k_1g": 10961,
+      "buy_18k_1g": 8629,
+      "silver_1kg": 152000,
       "change": {
-        "gold_24k_1g": 0,
-        "gold_22k_1g": 0,
-        "gold_18k_1g": 0,
-        "silver_1kg": 0
+        "gold_24k_1g": -453,
+        "gold_22k_1g": -415,
+        "gold_18k_1g": -340,
+        "silver_1kg": -10000
       }
     },
     "sambalpur": {
@@ -76,18 +76,18 @@
         "label_en": "Market rate",
         "label_or": "ବଜାର ଦର"
       },
-      "gold_24k_1g": 12780,
-      "gold_22k_1g": 11715,
-      "gold_18k_1g": 9585,
-      "buy_24k_1g": 12397,
-      "buy_22k_1g": 11363,
-      "buy_18k_1g": 8946,
-      "silver_1kg": 162000,
+      "gold_24k_1g": 12327,
+      "gold_22k_1g": 11300,
+      "gold_18k_1g": 9245,
+      "buy_24k_1g": 11957,
+      "buy_22k_1g": 10961,
+      "buy_18k_1g": 8629,
+      "silver_1kg": 152000,
       "change": {
-        "gold_24k_1g": 0,
-        "gold_22k_1g": 0,
-        "gold_18k_1g": 0,
-        "silver_1kg": 0
+        "gold_24k_1g": -453,
+        "gold_22k_1g": -415,
+        "gold_18k_1g": -340,
+        "silver_1kg": -10000
       }
     },
     "balasore": {
@@ -98,18 +98,18 @@
         "label_en": "Market rate",
         "label_or": "ବଜାର ଦର"
       },
-      "gold_24k_1g": 12780,
-      "gold_22k_1g": 11715,
-      "gold_18k_1g": 9585,
-      "buy_24k_1g": 12397,
-      "buy_22k_1g": 11363,
-      "buy_18k_1g": 8946,
-      "silver_1kg": 162000,
+      "gold_24k_1g": 12327,
+      "gold_22k_1g": 11300,
+      "gold_18k_1g": 9245,
+      "buy_24k_1g": 11957,
+      "buy_22k_1g": 10961,
+      "buy_18k_1g": 8629,
+      "silver_1kg": 152000,
       "change": {
-        "gold_24k_1g": 0,
-        "gold_22k_1g": 0,
-        "gold_18k_1g": 0,
-        "silver_1kg": 0
+        "gold_24k_1g": -453,
+        "gold_22k_1g": -415,
+        "gold_18k_1g": -340,
+        "silver_1kg": -10000
       }
     },
     "rourkela": {
@@ -120,18 +120,18 @@
         "label_en": "Market rate",
         "label_or": "ବଜାର ଦର"
       },
-      "gold_24k_1g": 12780,
-      "gold_22k_1g": 11715,
-      "gold_18k_1g": 9585,
-      "buy_24k_1g": 12397,
-      "buy_22k_1g": 11363,
-      "buy_18k_1g": 8946,
-      "silver_1kg": 162000,
+      "gold_24k_1g": 12327,
+      "gold_22k_1g": 11300,
+      "gold_18k_1g": 9245,
+      "buy_24k_1g": 11957,
+      "buy_22k_1g": 10961,
+      "buy_18k_1g": 8629,
+      "silver_1kg": 152000,
       "change": {
-        "gold_24k_1g": 0,
-        "gold_22k_1g": 0,
-        "gold_18k_1g": 0,
-        "silver_1kg": 0
+        "gold_24k_1g": -453,
+        "gold_22k_1g": -415,
+        "gold_18k_1g": -340,
+        "silver_1kg": -10000
       }
     },
     "puri": {
@@ -142,18 +142,18 @@
         "label_en": "Market rate",
         "label_or": "ବଜାର ଦର"
       },
-      "gold_24k_1g": 12780,
-      "gold_22k_1g": 11715,
-      "gold_18k_1g": 9585,
-      "buy_24k_1g": 12397,
-      "buy_22k_1g": 11363,
-      "buy_18k_1g": 8946,
-      "silver_1kg": 162000,
+      "gold_24k_1g": 12327,
+      "gold_22k_1g": 11300,
+      "gold_18k_1g": 9245,
+      "buy_24k_1g": 11957,
+      "buy_22k_1g": 10961,
+      "buy_18k_1g": 8629,
+      "silver_1kg": 152000,
       "change": {
-        "gold_24k_1g": 0,
-        "gold_22k_1g": 0,
-        "gold_18k_1g": 0,
-        "silver_1kg": 0
+        "gold_24k_1g": -453,
+        "gold_22k_1g": -415,
+        "gold_18k_1g": -340,
+        "silver_1kg": -10000
       }
     },
     "angul": {
@@ -164,18 +164,18 @@
         "label_en": "Market rate",
         "label_or": "ବଜାର ଦର"
       },
-      "gold_24k_1g": 12780,
-      "gold_22k_1g": 11715,
-      "gold_18k_1g": 9585,
-      "buy_24k_1g": 12397,
-      "buy_22k_1g": 11363,
-      "buy_18k_1g": 8946,
-      "silver_1kg": 162000,
+      "gold_24k_1g": 12327,
+      "gold_22k_1g": 11300,
+      "gold_18k_1g": 9245,
+      "buy_24k_1g": 11957,
+      "buy_22k_1g": 10961,
+      "buy_18k_1g": 8629,
+      "silver_1kg": 152000,
       "change": {
-        "gold_24k_1g": 0,
-        "gold_22k_1g": 0,
-        "gold_18k_1g": 0,
-        "silver_1kg": 0
+        "gold_24k_1g": -453,
+        "gold_22k_1g": -415,
+        "gold_18k_1g": -340,
+        "silver_1kg": -10000
       }
     }
   }
