@@ -29,6 +29,9 @@ OUT_DIR = os.path.join(ROOT, "docs")
 MANUAL_PATH = os.path.join(ROOT, "manual", "today.json")
 IST = timezone(timedelta(hours=5, minutes=30))
 HISTORY_DAYS = 30
+# When rates have not changed, the files are rewritten (new updated_at) only this often,
+# so frequent checks do not make a commit every time.
+REFRESH_UNCHANGED_HOURS = 6
 
 GOLD_FIELDS = ("gold_24k_1g", "gold_22k_1g", "gold_18k_1g")
 BUY_FIELDS = ("buy_24k_1g", "buy_22k_1g", "buy_18k_1g")
@@ -273,6 +276,23 @@ def default_app_config():
     }
 
 
+def unchanged_and_recent(today_doc, history_doc, now):
+    """True when the published files already hold these rates and are fresh enough."""
+    old_today = load_json(os.path.join(OUT_DIR, "today.json"), None)
+    old_history = load_json(os.path.join(OUT_DIR, "history.json"), None)
+    if not isinstance(old_today, dict) or old_history != history_doc:
+        return False
+    if old_today.get("cities") != today_doc["cities"]:
+        return False
+    try:
+        published = datetime.fromisoformat(old_today["updated_at"])
+    except (KeyError, TypeError, ValueError):
+        return False
+    if published.date() != now.date():
+        return False
+    return now - published < timedelta(hours=REFRESH_UNCHANGED_HOURS)
+
+
 def build(now=None):
     config = load_json(CONFIG_PATH, None)
     if config is None:
@@ -372,6 +392,10 @@ def build(now=None):
     }
     days = past_days + [{"date": today, "cities": history_cities}]
     history_doc = {"schema_version": 1, "days": days[-HISTORY_DAYS:]}
+
+    if unchanged_and_recent(today_doc, history_doc, now):
+        log("Rates unchanged since the last publish; files kept")
+        return 0
 
     write_json(os.path.join(OUT_DIR, "today.json"), today_doc)
     write_json(os.path.join(OUT_DIR, "history.json"), history_doc)

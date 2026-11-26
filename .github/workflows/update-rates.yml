@@ -34,7 +34,7 @@ jobs:
       - name: Run tests
         run: |
           python -m unittest discover -s scraper/tests -v
-          node --test tests/admin_api.test.mjs
+          node --test tests/admin_api.test.mjs tests/timer.test.mjs
 
       - name: Build rates
         id: build

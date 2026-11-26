@@ -1,8 +1,9 @@
 import json
 import os
 import sys
+import tempfile
 import unittest
-from datetime import datetime
+from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -153,3 +154,35 @@ class ParseNumberTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class UnchangedTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.old_out = br.OUT_DIR
+        br.OUT_DIR = self.tmp.name
+        self.today = {"schema_version": 1, "updated_at": NOW.isoformat(), "cities": {"cuttack": {"gold_22k_1g": 11540}}}
+        self.history = {"schema_version": 1, "days": [{"date": "2026-11-18", "cities": {}}]}
+        br.write_json(os.path.join(br.OUT_DIR, "today.json"), self.today)
+        br.write_json(os.path.join(br.OUT_DIR, "history.json"), self.history)
+
+    def tearDown(self):
+        br.OUT_DIR = self.old_out
+        self.tmp.cleanup()
+
+    def test_same_rates_soon_after_are_kept(self):
+        later = NOW + timedelta(minutes=5)
+        doc = dict(self.today, updated_at=later.isoformat())
+        self.assertTrue(br.unchanged_and_recent(doc, self.history, later))
+
+    def test_new_rate_is_written(self):
+        doc = {"schema_version": 1, "updated_at": NOW.isoformat(), "cities": {"cuttack": {"gold_22k_1g": 11600}}}
+        self.assertFalse(br.unchanged_and_recent(doc, self.history, NOW))
+
+    def test_refreshed_after_six_hours(self):
+        later = NOW + timedelta(hours=6, minutes=1)
+        self.assertFalse(br.unchanged_and_recent(self.today, self.history, later))
+
+    def test_new_day_is_written(self):
+        tomorrow = datetime(2026, 11, 19, 0, 30, tzinfo=br.IST)
+        self.assertFalse(br.unchanged_and_recent(self.today, self.history, tomorrow))
