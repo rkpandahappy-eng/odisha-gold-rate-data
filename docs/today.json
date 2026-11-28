@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-28T10:01:02+05:30",
+  "updated_at": "2026-11-28T10:06:02+05:30",
   "cities": {
     "cuttack": {
       "name_en": "Cuttack",
@@ -16,12 +16,12 @@
       "buy_24k_1g": 12455,
       "buy_22k_1g": 11417,
       "buy_18k_1g": 8988,
-      "silver_1kg": 191000,
+      "silver_1kg": 162000,
       "change": {
         "gold_24k_1g": 0,
         "gold_22k_1g": 0,
         "gold_18k_1g": 0,
-        "silver_1kg": 29000
+        "silver_1kg": 0
       }
     },
     "bhubaneswar": {
@@ -38,12 +38,12 @@
       "buy_24k_1g": 12455,
       "buy_22k_1g": 11417,
       "buy_18k_1g": 8988,
-      "silver_1kg": 191000,
+      "silver_1kg": 162000,
       "change": {
         "gold_24k_1g": 0,
         "gold_22k_1g": 0,
         "gold_18k_1g": 0,
-        "silver_1kg": 29000
+        "silver_1kg": 0
       }
     },
     "berhampur": {
@@ -60,12 +60,12 @@
       "buy_24k_1g": 12455,
       "buy_22k_1g": 11417,
       "buy_18k_1g": 8988,
-      "silver_1kg": 191000,
+      "silver_1kg": 162000,
       "change": {
         "gold_24k_1g": 0,
         "gold_22k_1g": 0,
         "gold_18k_1g": 0,
-        "silver_1kg": 29000
+        "silver_1kg": 0
       }
     },
     "sambalpur": {
@@ -82,12 +82,12 @@
       "buy_24k_1g": 12455,
       "buy_22k_1g": 11417,
       "buy_18k_1g": 8988,
-      "silver_1kg": 191000,
+      "silver_1kg": 162000,
       "change": {
         "gold_24k_1g": 0,
         "gold_22k_1g": 0,
         "gold_18k_1g": 0,
-        "silver_1kg": 29000
+        "silver_1kg": 0
       }
     },
     "balasore": {
@@ -104,12 +104,12 @@
       "buy_24k_1g": 12455,
       "buy_22k_1g": 11417,
       "buy_18k_1g": 8988,
-      "silver_1kg": 191000,
+      "silver_1kg": 162000,
       "change": {
         "gold_24k_1g": 0,
         "gold_22k_1g": 0,
         "gold_18k_1g": 0,
-        "silver_1kg": 29000
+        "silver_1kg": 0
       }
     },
     "rourkela": {
@@ -126,12 +126,12 @@
       "buy_24k_1g": 12455,
       "buy_22k_1g": 11417,
       "buy_18k_1g": 8988,
-      "silver_1kg": 191000,
+      "silver_1kg": 162000,
       "change": {
         "gold_24k_1g": 0,
         "gold_22k_1g": 0,
         "gold_18k_1g": 0,
-        "silver_1kg": 29000
+        "silver_1kg": 0
       }
     },
     "puri": {
@@ -148,12 +148,12 @@
       "buy_24k_1g": 12455,
       "buy_22k_1g": 11417,
       "buy_18k_1g": 8988,
-      "silver_1kg": 191000,
+      "silver_1kg": 162000,
       "change": {
         "gold_24k_1g": 0,
         "gold_22k_1g": 0,
         "gold_18k_1g": 0,
-        "silver_1kg": 29000
+        "silver_1kg": 0
       }
     },
     "angul": {
@@ -170,12 +170,12 @@
       "buy_24k_1g": 12455,
       "buy_22k_1g": 11417,
       "buy_18k_1g": 8988,
-      "silver_1kg": 191000,
+      "silver_1kg": 162000,
       "change": {
         "gold_24k_1g": 0,
         "gold_22k_1g": 0,
         "gold_18k_1g": 0,
-        "silver_1kg": 29000
+        "silver_1kg": 0
       }
     }
   }
